@@ -9,14 +9,27 @@ class Agentplane < Formula
   depends_on "node"
 
   def install
-    system "npm", "install", "--global", "--prefix", libexec,
+    system Formula["node"].opt_bin/"npm", "install", "--global", "--prefix", libexec,
       "--omit=dev", "--ignore-scripts", "--no-audit", "--no-fund",
       cached_download
     bin.install_symlink Dir[libexec/"bin/*"]
   end
 
+  livecheck do
+    url "https://registry.npmjs.org/agentplane"
+    regex(/"version"\s*:\s*"(\d+(?:\.\d+)+)"/i)
+  end
+
   test do
-    assert_match "0.4.1", shell_output("#{bin}/agentplane --version")
+    assert_match version.to_s, shell_output("#{bin}/agentplane --version")
     assert_match "agentplane", shell_output("#{bin}/agentplane --help")
+  end
+
+  def caveats
+    <<~EOS
+      After installation you can initialize a repo with:
+        agentplane init
+        agentplane quickstart
+    EOS
   end
 end
