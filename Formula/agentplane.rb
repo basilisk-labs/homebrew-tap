@@ -1,35 +1,33 @@
 class Agentplane < Formula
-  desc "Git-native CLI harness for auditable coding-agent workflows"
-  homepage "https://agentplane.org"
-  url "https://registry.npmjs.org/agentplane/-/agentplane-0.4.1.tgz"
-  sha256 "76edd130dceddb1d15313a5feb3819c513c815b350b9abc822b3ea4712ccc74b"
-  version "0.4.1"
+  desc "CLI for auditable coding-agent workflows"
+  homepage "https://github.com/basilisk-labs/agentplane"
+  version "0.4.2"
   license "MIT"
 
-  depends_on "node"
-
-  def install
-    system Formula["node"].opt_bin/"npm", "install", "--global", "--prefix", libexec,
-      "--omit=dev", "--ignore-scripts", "--no-audit", "--no-fund",
-      cached_download
-    bin.install_symlink Dir[libexec/"bin/*"]
+  if OS.mac? && Hardware::CPU.arm?
+    url "https://github.com/basilisk-labs/agentplane/releases/download/v0.4.2/agentplane-v0.4.2-darwin-arm64.tar.gz"
+    sha256 "8bc19b2a29a48a350d283153156644e8128cd05e49cd1a02513659a5aa95759b"
+  elsif OS.mac? && Hardware::CPU.intel?
+    url "https://github.com/basilisk-labs/agentplane/releases/download/v0.4.2/agentplane-v0.4.2-darwin-x64.tar.gz"
+    sha256 "a538cc7d91ff55fbf2c1dbc969782500d8a5c5ed1e0b9a50e2530616957f2083"
+  else
+    odie "AgentPlane Homebrew formula currently supports macOS arm64 and x86_64 standalone archives"
   end
 
   livecheck do
-    url "https://registry.npmjs.org/agentplane"
-    regex(/"version"\s*:\s*"(\d+(?:\.\d+)+)"/i)
+    url "https://api.github.com/repos/basilisk-labs/agentplane/releases/latest"
+    strategy :json do |json|
+      json["tag_name"]&.gsub(/^v/, "")
+    end
+  end
+
+  def install
+    libexec.install Dir["*"]
+    bin.install_symlink libexec/"bin/agentplane" => "agentplane"
   end
 
   test do
-    assert_match version.to_s, shell_output("#{bin}/agentplane --version")
+    assert_match "0.4.2", shell_output("#{bin}/agentplane --version")
     assert_match "agentplane", shell_output("#{bin}/agentplane --help")
-  end
-
-  def caveats
-    <<~EOS
-      After installation you can initialize a repo with:
-        agentplane init
-        agentplane quickstart
-    EOS
   end
 end
