@@ -23,11 +23,13 @@ class Agentplane < Formula
 
   def install
     libexec.install Dir["*"]
-    bin.install_symlink libexec/"bin/agentplane" => "agentplane"
+    bin.install_symlink libexec/"agentplane" => "agentplane"
+    bin.install_symlink libexec/"agentplane" => "ap"
   end
 
   test do
     assert_match "0.4.4", shell_output("#{bin}/agentplane --version")
+    assert_match "0.4.4", shell_output("#{bin}/ap --version")
     assert_match "agentplane", shell_output("#{bin}/agentplane --help")
   end
 end
