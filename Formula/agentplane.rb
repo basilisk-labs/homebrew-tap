@@ -1,15 +1,15 @@
 class Agentplane < Formula
   desc "CLI for auditable coding-agent workflows"
   homepage "https://github.com/basilisk-labs/agentplane"
-  version "0.4.4"
+  version "0.6.1"
   license "MIT"
 
   if OS.mac? && Hardware::CPU.arm?
-    url "https://github.com/basilisk-labs/agentplane/releases/download/v0.4.4/agentplane-bun-v0.4.4-darwin-arm64.tar.gz"
-    sha256 "7bb81d0b66b7f59a62ecbb5e83fa67f6f8344ac65b9f39447d76c2448c0b44cf"
+    url "https://github.com/basilisk-labs/agentplane/releases/download/v0.6.1/agentplane-bun-v0.6.1-darwin-arm64.tar.gz"
+    sha256 "d213347a44a040550887373fb231d5dbc768dc19d0ada60870835f79829b3109"
   elsif OS.mac? && Hardware::CPU.intel?
-    url "https://github.com/basilisk-labs/agentplane/releases/download/v0.4.4/agentplane-bun-v0.4.4-darwin-x64.tar.gz"
-    sha256 "379438dbd3c3afab6d476211f0a956e9d4682269e398c7557cd46ca62f16bb93"
+    url "https://github.com/basilisk-labs/agentplane/releases/download/v0.6.1/agentplane-bun-v0.6.1-darwin-x64.tar.gz"
+    sha256 "7988b7c1a7940fc4708c48c218a41f6d8f63c3d0ac79a14cf5ecfc9167d16524"
   else
     odie "AgentPlane Homebrew formula currently supports macOS arm64 and x86_64 Bun executable archives"
   end
@@ -23,13 +23,11 @@ class Agentplane < Formula
 
   def install
     libexec.install Dir["*"]
-    bin.install_symlink libexec/"agentplane" => "agentplane"
-    bin.install_symlink libexec/"agentplane" => "ap"
+    bin.install_symlink libexec/"bin/agentplane" => "agentplane"
   end
 
   test do
-    assert_match "0.4.4", shell_output("#{bin}/agentplane --version")
-    assert_match "0.4.4", shell_output("#{bin}/ap --version")
+    assert_match "0.6.1", shell_output("#{bin}/agentplane --version")
     assert_match "agentplane", shell_output("#{bin}/agentplane --help")
   end
 end
