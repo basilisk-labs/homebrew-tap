@@ -1,15 +1,15 @@
 class Agentplane < Formula
   desc "CLI for auditable coding-agent workflows"
   homepage "https://github.com/basilisk-labs/agentplane"
-  version "0.6.9"
+  version "0.6.10"
   license "MIT"
 
   if OS.mac? && Hardware::CPU.arm?
-    url "https://github.com/basilisk-labs/agentplane/releases/download/v0.6.9/agentplane-bun-v0.6.9-darwin-arm64.tar.gz"
-    sha256 "daacaf9528b9348a40de210e17a0e7856c9597c0f053b6eab9c66b6df253aab5"
+    url "https://github.com/basilisk-labs/agentplane/releases/download/v0.6.10/agentplane-bun-v0.6.10-darwin-arm64.tar.gz"
+    sha256 "dcfa0b9c05bdf9d6f310e981241e254b37dcd60fcf2e3480d51a9f06192def0a"
   elsif OS.mac? && Hardware::CPU.intel?
-    url "https://github.com/basilisk-labs/agentplane/releases/download/v0.6.9/agentplane-bun-v0.6.9-darwin-x64.tar.gz"
-    sha256 "a5780355fc6539b48e5c0e442194a25147c3a3853ab3408583ba86581480e238"
+    url "https://github.com/basilisk-labs/agentplane/releases/download/v0.6.10/agentplane-bun-v0.6.10-darwin-x64.tar.gz"
+    sha256 "98d5e47b5f64be30af1c56b7673d06b23f238d02919429cb2130d2a86849b8a1"
   else
     odie "AgentPlane Homebrew formula currently supports macOS arm64 and x86_64 Bun executable archives"
   end
@@ -27,7 +27,7 @@ class Agentplane < Formula
   end
 
   test do
-    assert_match "0.6.9", shell_output("#{bin}/agentplane --version")
+    assert_match "0.6.10", shell_output("#{bin}/agentplane --version")
     assert_match "agentplane", shell_output("#{bin}/agentplane --help")
   end
 end
