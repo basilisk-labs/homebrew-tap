@@ -22,12 +22,16 @@ class Agentplane < Formula
   end
 
   def install
-    libexec.install Dir["*"]
-    bin.install_symlink libexec/"bin/agentplane" => "agentplane"
+    # Homebrew stages inside the archive's single top-level bin directory.
+    libexec.install "agentplane"
+    bin.install_symlink libexec/"agentplane" => "agentplane"
+    bin.install_symlink libexec/"agentplane" => "ap"
   end
 
   test do
     assert_match "0.7.8", shell_output("#{bin}/agentplane --version")
     assert_match "agentplane", shell_output("#{bin}/agentplane --help")
+    assert_match "0.7.8", shell_output("#{bin}/ap --version")
+    assert_match "agentplane", shell_output("#{bin}/ap --help")
   end
 end
