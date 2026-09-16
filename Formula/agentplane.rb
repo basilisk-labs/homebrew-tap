@@ -6,10 +6,10 @@ class Agentplane < Formula
 
   if OS.mac? && Hardware::CPU.arm?
     url "https://github.com/basilisk-labs/agentplane/releases/download/v0.7.9/agentplane-bun-v0.7.9-darwin-arm64.tar.gz"
-    sha256 "e6f2ed216bb601e1a097104b66da3e33bd7238aefea77a59eac6c8d5ce39bba5"
+    sha256 "b94bb98003d512130a89c7565a412f3fd66832feb06472f9c0ccec0ac3c0a546"
   elsif OS.mac? && Hardware::CPU.intel?
     url "https://github.com/basilisk-labs/agentplane/releases/download/v0.7.9/agentplane-bun-v0.7.9-darwin-x64.tar.gz"
-    sha256 "f2cf83a835d542d4616a89ee61672c409efd50d7cb1e9be1d7631774c0d127a2"
+    sha256 "74f611642e58a168bd51491289d8c82287f9e6f560ea669d783cd3edc1d66a9d"
   else
     odie "AgentPlane Homebrew formula currently supports macOS arm64 and x86_64 Bun executable archives"
   end
